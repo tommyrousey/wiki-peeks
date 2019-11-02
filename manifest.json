@@ -3,6 +3,9 @@
 	"version": "1.0",
 	"manifest_version": 2,
 	"description": "peeks at wikis!",
+	"browser_action": {
+		"default_icon": "snowcappedmountains.svg"
+	},
 	"content_scripts": [
 		{
 			"matches": [
