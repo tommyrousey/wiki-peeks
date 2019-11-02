@@ -10,7 +10,8 @@ function getPageDetails(callback) {
 };
 rightClick = function(word){
     var query = word.selectionText;
-    alert(query);
+    //alert(query);
+    hello();
  };
 
 chrome.contextMenus.create({

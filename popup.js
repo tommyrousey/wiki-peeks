@@ -18,3 +18,7 @@ window.addEventListener('load', function(evt) {
 		eventPage.getPageDetails(onPageDetailsReceived);
 	});
 });
+
+function hello(){
+	alert("Hello");
+}
