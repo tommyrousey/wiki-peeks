@@ -16,6 +16,7 @@
 		"scripts": ["event.js"],
 		"persistent": false
 	},
+	"options_page": "options.html",
 	"browser_action": {
 		"default_icon": "snowcappedmountains.png",
 		"default_popup": "popup.html"
