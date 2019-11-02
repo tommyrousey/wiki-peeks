@@ -2,5 +2,12 @@
 	"name": "wiki-peeks",
 	"version": "1.0",
 	"manifest_version": 2,
-	"description": "peeks at wikis!"
+	"description": "peeks at wikis!",
+	"content_scripts": [
+		{
+			"matches": [
+				"<all_urls>"],
+			"js": ["content.js"]
+		}
+	]
 }
