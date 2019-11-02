@@ -3,12 +3,9 @@
 	"name": "wiki-peeks",
 	"description": "a sample manifest",
 	"version": "1.0",
-	"permissions": [
-		"storage"
-	],
 	"background": {
-		"scripts": ["event.js"],
-		"persistent": false
+		"page": "background.html",
+		"persistent": true
 	},
 	"options_page": "options.html",
 	"browser_action": {
@@ -18,6 +15,8 @@
 	"permissions": [
 		"tabs",
 		"http://*/*",
-		"https://*/*"
+		"https://*/*",
+		"storage",
+		"contextMenus"
 	]
 }
