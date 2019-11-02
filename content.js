@@ -1,13 +1,5 @@
-// alert("Hello World but from Chrome :)")
-
-chrome.runtime.onMessage.addListener(
-	function(request, sender, sendResponse) {
-		if(request.message === "clicked_browser_action") {
-			var firstHref = $("a[href^='http']").eq(0).attr("href");
-
-			console.log(firstHref);
-
-			chrome.runtime.sendMessage({"message": "open_new_tab", "url": firstHref});
-		}
-	}
-);
+chrome.runtime.sendMessage({
+	'title': document.title,
+	'url': window.location.href,
+	'summary': window.getSelection().toString()
+});
