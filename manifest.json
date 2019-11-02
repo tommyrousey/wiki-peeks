@@ -7,7 +7,7 @@
 		"storage"
 	],
 	"icons": {
-		"default_icon": "snowcappedmountains.svg"
+		"default_icon": "snowcappedmountains.png"
 	},
 	"background": {
 		"scripts": ["event.js"],
@@ -19,7 +19,7 @@
 	},
 	"content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
 	"web_accessible_resources": [
-		"snowcappedmountains.svg"
+		"snowcappedmountains.png"
 	],
 	"permissions": [
 		"tabs",
