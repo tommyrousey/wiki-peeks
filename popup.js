@@ -1,5 +1,11 @@
+function lookup(selection) {
+    chrome.storage.sync.get('wikis', function(result) {
+        console.log('[API] got list from storage: ', result);
+    });
+}
+
 function onPageDetailsReceived(details) {
-	document.getElementById('output').innerText = details.summary;
+	document.getElementById('output').innerHTML = lookup(details.summary);
 }
 
 // when popup html has loaded
