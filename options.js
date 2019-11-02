@@ -1,4 +1,4 @@
-const var ids = ["wikipedia", "gamepedia", "fandom"];
+const ids = ["wikipedia", "gamepedia", "fandom"];
 
 var userRankings = [new Wikipedia(), new Gamepedia()];
 
@@ -11,7 +11,9 @@ class Wiki {
 		this.subType = subType;
 	}
 
-	function query() {}
+	query() {
+		return "super";
+	}
 }
 
 class Wikipedia extends Wiki {
@@ -19,7 +21,7 @@ class Wikipedia extends Wiki {
 		super(ids[0], "", "");
 	}
 
-	function query() {
+	query() {
 		return "wikipedia :)";
 	}
 }
@@ -29,7 +31,7 @@ class Gamepedia extends Wiki {
 		super(ids[1], "", "");
 	}
 
-	function query() {
+	query() {
 		return "gamepedia :()";
 	}
 }
@@ -39,7 +41,7 @@ class Fandom extends Wiki {
 		super(ids[2], "", "")
 	}
 
-	function query() {
+	query() {
 
 	}
 }
