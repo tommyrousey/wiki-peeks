@@ -5,7 +5,7 @@ function lookup(selection) {
 }
 
 function onPageDetailsReceived(details) {
-	document.getElementById('output').innerHTML = lookup(details.summary);
+	document.getElementById('output').innerHTML = details.summary;
 }
 
 // when popup html has loaded
