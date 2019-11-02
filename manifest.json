@@ -7,6 +7,9 @@
 		"storage"
 	],
 	"icons": {
+        "16":"snowcappedmountains.png",
+        "48":"snowcappedmountains.png",
+        "128": "snowcappedmountains.png",
 		"default_icon": "snowcappedmountains.png"
 	},
 	"background": {
