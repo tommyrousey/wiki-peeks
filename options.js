@@ -49,9 +49,20 @@ console.log(userRankings[1].query());
 
 
 // saves options to chrome.storage
-// function save_options() {
-
-// }
+function save_options() {
+	var toSave = document.getElementById('sortable');
+	chrome.storage.sync.set({
+		rankedList: toSave
+		}, function() {
+			// update status to let user know options were saved
+			var status = document.getElementById('status');
+			status.textContent = 'Options saved';
+			setTimeout(function() {
+				status.textContent = '';
+				}, 750);
+			});
+	});
+}
 
 // // restores options using the preferences from chrome.storage
 // function restore_options() {
@@ -62,4 +73,4 @@ console.log(userRankings[1].query());
 // }
 
 // document.addEventListener('DOMContentLoaded', restore_options);
-// document.getElementById('save').addEventListener('click', save_options);
+document.getElementById('save').addEventListener('click', save_options);
