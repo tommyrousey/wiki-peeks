@@ -53,14 +53,14 @@ function save_options() {
 	var toSave = document.getElementById('sortable');
 	chrome.storage.sync.set({
 		rankedList: toSave
-		}, function() {
-			// update status to let user know options were saved
-			var status = document.getElementById('status');
-			status.textContent = 'Options saved';
-			setTimeout(function() {
-				status.textContent = '';
-				}, 750);
-		}
+	}, function () {
+		// update status to let user know options were saved
+		var status = document.getElementById('status');
+		status.textContent = 'Options saved';
+		setTimeout(function () {
+			status.textContent = '';
+		}, 750);
+	}
 	);
 }
 
@@ -74,3 +74,25 @@ function save_options() {
 
 // document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('save').addEventListener('click', save_options);
+
+
+$(document).ready(function () {
+	var sortList = $("#sortable")
+
+	// Create a sortable list for the user to rearrange
+	sortList.sortable();
+	sortList.disableSelection();
+
+	// Display the wikis from the user's saved profile
+	userRankings.forEach(function (page) {
+		var listElement = '<li>' + page.name + '</li>';
+		sortList.append(listElement);
+	});
+
+	var addWiki = $('#add_wiki')
+	ids.forEach(function (wiki) {
+		console.log(wiki);
+		var listElement = '<option>' + wiki + '</option>';
+		addWiki.append(listElement);
+	});
+});
