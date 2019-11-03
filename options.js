@@ -1,18 +1,47 @@
 const ids = ["wikipedia", "gamepedia", "fandom"];
 
+const idx = (p, o) =>
+	p.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, o)
+
 class Wiki {
 	constructor(name, subName) {
 		this.name = name;
 		this.subName = subName;
 	}
 
-	query() {
+	async query(input) {
+		if (this.name === 'wikipedia') {
+			console.log('wikipedia query');
+			var url = 'https://en.wikipedia.org/w/api.php';
+
+			var params = {
+				action: 'query',
+				list: 'search',
+				srsearch: input,
+				format: 'json'
+			};
+
+			url = url + '?origin=*';
+			Object.keys(params).forEach(function(key){url += '&' + key +
+			'=' + params[key];});
+
+			var json = await fetch(url)
+				.then(function(response) {return response.json();})
+				.then(response => {snippet: response.query.search[0].snippet})
+				.catch(function(error) {console.log(error);});
+
+			console.log(json);
+			//console.log(idx(['query', 'search', 0, 'snippet'], json));
+		} else {
+			console.log('stuff');
+		}
 		return "super";
 	}
 }
 
 var userRankings = [new Wiki('wikipedia', ''), new Wiki('ethanpedia', '')];
 
+await userRankings[0].query('Nelson Mandela');
 
 // saves options to chrome.storage
 function save_options() {
