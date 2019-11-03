@@ -50,7 +50,7 @@ console.log(userRankings[1].query());
 
 // saves options to chrome.storage
 function save_options() {
-	var toSave = document.getElementById('sortable');
+	var toSave = $('#sortable').sortable('serialize');
 	chrome.storage.sync.set({
 		rankedList: toSave
 	}, function () {
@@ -73,7 +73,6 @@ function save_options() {
 // }
 
 // document.addEventListener('DOMContentLoaded', restore_options);
-document.getElementById('save').addEventListener('click', save_options);
 
 
 $(document).ready(function () {
@@ -95,4 +94,5 @@ $(document).ready(function () {
 		var listElement = '<option>' + wiki + '</option>';
 		addWiki.append(listElement);
 	});
+	document.getElementById('save').addEventListener('click', save_options);
 });
