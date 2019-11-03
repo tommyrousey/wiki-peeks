@@ -5,48 +5,9 @@ class Wiki {
 		this.name = name;
 		this.subName = subName;
 	}
-
-	async query(input) {
-		switch (this.name) {
-			case ids[0]:
-				var url = 'https://en.wikipedia.org/w/api.php';
-
-				var params = {
-					action: 'query',
-					list: 'search',
-					srsearch: input,
-					format: 'json'
-				};
-
-				url = url + '?origin=*';
-				Object.keys(params).forEach(function (key) {
-					url += '&' + key +
-						'=' + params[key];
-				});
-
-				var data = await fetch(url)
-					.then(response => response.json())
-					.then(json => json.query.search[0])
-					.then(search => ({ name: search.name, snippet: search.snippet }))
-					.catch(error => console.log(error));
-
-
-				// Parse the span tags for search terms out of the result
-				data.snippet = data.snippet.replace(/<span class=\"searchmatch\">/g, '');
-				data.snippet = data.snippet.replace(/<\/span>/g, '');
-
-				return data.snippet;
-			case ids[1]:
-				break;
-		}
-
-		return "super";
-	}
 }
 
-var userRankings = [new Wiki('wikipedia', ''), new Wiki('ethanpedia', '')];
-
-
+var userRankings = [new Wiki('wikipedia', '')];
 
 // saves options to chrome.storage
 function save_options() {
