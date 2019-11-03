@@ -19,6 +19,11 @@ window.addEventListener('load', function(evt) {
 	});
 });
 
-function hello(){
-	alert("Hello");
-}
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        console.log('HELLO!');
+        if (request.greeting == 'hello') {
+            alert('hello');
+        }
+    }
+);

@@ -10,9 +10,10 @@ function getPageDetails(callback) {
 };
 rightClick = function(word){
     var query = word.selectionText;
-    //alert(query);
-    hello();
- };
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello"});
+    });
+};
 
 chrome.contextMenus.create({
  title: "wiki-peeks",
