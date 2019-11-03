@@ -1,8 +1,5 @@
 const ids = ["wikipedia", "gamepedia", "fandom"];
 
-const idx = (p, o) =>
-	p.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, o)
-
 class Wiki {
 	constructor(name, subName) {
 		this.name = name;
@@ -10,43 +7,51 @@ class Wiki {
 	}
 
 	async query(input) {
-		if (this.name === 'wikipedia') {
-			console.log('wikipedia query');
-			var url = 'https://en.wikipedia.org/w/api.php';
+		switch (this.name) {
+			case ids[0]:
+				var url = 'https://en.wikipedia.org/w/api.php';
 
-			var params = {
-				action: 'query',
-				list: 'search',
-				srsearch: input,
-				format: 'json'
-			};
+				var params = {
+					action: 'query',
+					list: 'search',
+					srsearch: input,
+					format: 'json'
+				};
 
-			url = url + '?origin=*';
-			Object.keys(params).forEach(function(key){url += '&' + key +
-			'=' + params[key];});
+				url = url + '?origin=*';
+				Object.keys(params).forEach(function (key) {
+					url += '&' + key +
+						'=' + params[key];
+				});
 
-			var json = await fetch(url)
-				.then(function(response) {return response.json();})
-				.then(response => {snippet: response.query.search[0].snippet})
-				.catch(function(error) {console.log(error);});
+				var data = await fetch(url)
+					.then(response => response.json())
+					.then(json => json.query.search[0])
+					.then(search => ({ name: search.name, snippet: search.snippet }))
+					.catch(error => console.log(error));
 
-			console.log(json);
-			//console.log(idx(['query', 'search', 0, 'snippet'], json));
-		} else {
-			console.log('stuff');
+
+				// Parse the span tags for search terms out of the result
+				data.snippet = data.snippet.replace(/<span class=\"searchmatch\">/g, '');
+				data.snippet = data.snippet.replace(/<\/span>/g, '');
+
+				return data.snippet;
+			case ids[1]:
+				break;
 		}
+
 		return "super";
 	}
 }
 
 var userRankings = [new Wiki('wikipedia', ''), new Wiki('ethanpedia', '')];
 
-await userRankings[0].query('Nelson Mandela');
+
 
 // saves options to chrome.storage
 function save_options() {
 	var toSave = [];
-	$('#sortable li').each(function () {
+	$('#sortable li').each(() => {
 		var textArr = $(this).text().split(/_(.+)/);
 		var subName = '';
 		// has subpages
@@ -98,9 +103,7 @@ function add_wiki() {
 
 document.addEventListener('DOMContentLoaded', restore_options);
 
-$(document).ready(function () {
-	// restore_options();
-
+$(document).ready(async () => {
 	var sortList = $("#sortable");
 
 	// Create a sortable list for the user to rearrange
@@ -114,11 +117,10 @@ $(document).ready(function () {
 
 	var addWiki = $('#wiki_type')
 	ids.forEach(function (wiki) {
-		console.log(wiki);
 		var listElement = '<option>' + wiki + '</option>';
 		addWiki.append(listElement);
 	});
 
 	document.getElementById('save').addEventListener('click', save_options);
-	document.getElementById('add').addEventListener('click', add_wiki);
+	document.getElementById('add').addEventListener('click', add_wiki)
 });
