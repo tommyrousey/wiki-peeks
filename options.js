@@ -12,7 +12,7 @@ var userRankings = [new Wiki('wikipedia', '')];
 // saves options to chrome.storage
 function save_options() {
 	var toSave = [];
-	$('#sortable li').each(() => {
+	$('#sortable li').each(function () {
 		var textArr = $(this).text().split(/_(.+)/);
 		var subName = '';
 		// has subpages
