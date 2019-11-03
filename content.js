@@ -1,6 +1,9 @@
-chrome.runtime.sendMessage({
-	'title': document.title,
-	'url': window.location.href,
-	'summary': window.getSelection().toString()
-
-});
+alert('registering');
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        alert('receiving');
+        if (request.id == 'msg') {
+            alert(request.msg);
+        }
+    }
+);
