@@ -11,7 +11,7 @@ class Wiki {
 	}
 }
 
-var userRankings = [new Wiki('wikipedia','')];
+var userRankings = [new Wiki('wikipedia', ''), new Wiki('ethanpedia', '')];
 
 
 // saves options to chrome.storage
@@ -21,7 +21,7 @@ function save_options() {
 		var textArr = $(this).text().split(/_(.+)/);
 		var subName = '';
 		// has subpages
-		if(textArr.length == 2) {
+		if (textArr.length == 2) {
 			subName = textArr[1];
 		}
 		toSave.push(new Wiki(textArr[0], subName));
@@ -40,19 +40,26 @@ function save_options() {
 	);
 }
 
-// // restores options using the preferences from chrome.storage
-// function restore_options() {
-// 	// get json stuff and put the values in the list
-// 	chrome.storage.sync.get({
+// restores options using the preferences from chrome.storage
+function restore_options() {
+	// get json stuff and put the values in the list
+	chrome.storage.sync.get({
+		rankedList: [new Wiki('wikipedia', '')]
+	}, function (saved) {
+		userRankings = [];
+		saved.rankedList.forEach(function (wiki) {
+			userRankings.push(new Wiki(wiki.name, wiki.subName));
+		});
+	});
+}
 
-// 	});
-// }
-
-// document.addEventListener('DOMContentLoaded', restore_options);
+document.addEventListener('DOMContentLoaded', restore_options);
 
 
 $(document).ready(function () {
-	var sortList = $("#sortable")
+	// restore_options();
+
+	var sortList = $("#sortable");
 
 	// Create a sortable list for the user to rearrange
 	sortList.sortable();
@@ -70,5 +77,6 @@ $(document).ready(function () {
 		var listElement = '<option>' + wiki + '</option>';
 		addWiki.append(listElement);
 	});
+
 	document.getElementById('save').addEventListener('click', save_options);
 });
