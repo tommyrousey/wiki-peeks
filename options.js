@@ -83,7 +83,7 @@ function restore_options() {
 }
 
 function append_wiki(name) {
-	var listElement = '<li>' + name + '</li>';
+	var listElement = '<li class="draggable">' + name + '</li>';
 	$("#sortable").append(listElement);
 }
 
