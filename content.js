@@ -8,7 +8,9 @@ chrome.runtime.onMessage.addListener(
             var domNode = selected.anchorNode;
             var offset = selected.anchorOffset;
 			var end = selected.focusOffset;
-            alert(domNode.nodeValue + ' a ' + offset);
+            //alert(domNode.nodeValue + ' a ' + offset);
+			
+			//domNode.nodeValue = domNode.nodeValue.replace(/\s/g, '\xa0');
 			
             var spanTag = document.createElement('span');
 			spanTag.className = 'tooltiptext';
@@ -16,7 +18,7 @@ chrome.runtime.onMessage.addListener(
 			
 			var newNode = document.createElement('div');
 			newNode.className = 'tooltip';
-			newNode.innerHTML = selected.toString();
+			newNode.innerHTML = selected.toString().replace(/\s/g, '\xa0');
 			newNode.appendChild(spanTag);
 
 			var e = domNode.parentNode;
