@@ -1,8 +1,7 @@
 rightClick = function(word) {
-    var query = word.selectionText;
-    alert('sending');
+    console.log('sending');
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, {id: 'msg', msg: query});
+        chrome.tabs.sendMessage(tabs[0].id, {msg: 'hello'});
     });
 };
 
