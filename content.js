@@ -1,17 +1,21 @@
 function get_rankings() {
-	userRankings = [];
-	chrome.storage.sync.get({
-		rankedList: [new Wiki('wikipedia', '')]
-	}, function (saved) {
-		saved.rankedList.forEach(function (wiki) {
-			userRankings.push(new Wiki(wiki.name, wiki.subName));
+	return new Promise((resolve) => {
+		rankings = [];
+
+		chrome.storage.sync.get({
+			rankedList: [{ name: 'wikipedia', subname: '' }]
+		}, function (saved) {
+			saved.rankedList.forEach(function (wiki) {
+				rankings.push({ name: wiki.name, subname: wiki.subName });
+			});
+
+			resolve(rankings);
 		});
 	});
-
-	return userRankings;
 }
 
-async function query(wiki, input) {
+async function query(wiki, subwiki, input) {
+	console.log(wiki, subwiki, input);
 	switch (wiki) {
 		case 'wikipedia':
 			var url = 'https://en.wikipedia.org/w/api.php';
@@ -33,7 +37,10 @@ async function query(wiki, input) {
 				.then(response => response.json())
 				.then(json => json.query.search[0])
 				.then(search => ({ name: search.name, snippet: search.snippet }))
-				.catch(error => console.log(error));
+				.catch(error => {
+					console.log(error);
+					return '';
+				});
 
 
 			// Parse the span tags for search terms out of the result
@@ -43,16 +50,27 @@ async function query(wiki, input) {
 			return data.snippet;
 		case 'gamepedia':
 			break;
+		default:
+			return '';
 	}
 
-	return "super";
+	return '';
 }
 
-// function query_all(wiki, input) {
-// 	rankings = get_rankings();
+async function query_all(input) {
+	var rankings = await get_rankings();
 
+	var data = '';
+	for (i = 0; i < rankings.length; i++) {
+		data = await query(rankings[i].name, rankings[i].subname, input);
 
-// }
+		if (data != '') {
+			break;
+		}
+	}
+
+	return data;
+}
 
 console.log('registering');
 chrome.runtime.onMessage.addListener(
@@ -71,7 +89,7 @@ chrome.runtime.onMessage.addListener(
 			var spanTag = document.createElement('span');
 			spanTag.className = 'tooltiptext';
 
-			spanTag.innerHTML = await query('wikipedia', selected.toString());
+			spanTag.innerHTML = await query_all(selected.toString());
 
 			var newNode = document.createElement('div');
 			newNode.className = 'tooltip';
