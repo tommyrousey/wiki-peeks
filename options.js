@@ -1,10 +1,9 @@
 const ids = ["wikipedia", "gamepedia", "fandom"];
 
 class Wiki {
-	constructor(name, subId, subType) {
+	constructor(name, subName) {
 		this.name = name;
-		this.subId = subId;
-		this.subType = subType;
+		this.subName = subName;
 	}
 
 	query() {
@@ -12,45 +11,22 @@ class Wiki {
 	}
 }
 
-class Wikipedia extends Wiki {
-	constructor() {
-		super(ids[0], "", "");
-	}
-
-	query() {
-		return "wikipedia :)";
-	}
-}
-
-class Gamepedia extends Wiki {
-	constructor() {
-		super(ids[1], "", "");
-	}
-
-	query() {
-		return "gamepedia :()";
-	}
-}
-
-class Fandom extends Wiki {
-	constructor() {
-		super(ids[2], "", "")
-	}
-
-	query() {
-
-	}
-}
-
-var userRankings = [new Wikipedia(), new Gamepedia()];
-
-console.log(userRankings[0].query());
-console.log(userRankings[1].query());
+var userRankings = [new Wiki('wikipedia','')];
 
 
 // saves options to chrome.storage
 function save_options() {
-	var toSave = $('#sortable').sortable('serialize');
+	var toSave = [];
+	$('#sortable li').each(function () {
+		var textArr = $(this).text().split(/_(.+)/);
+		var subName = '';
+		// has subpages
+		if(textArr.length == 2) {
+			subName = textArr[1];
+		}
+		toSave.push(new Wiki(textArr[0], subName));
+	});
+
 	chrome.storage.sync.set({
 		rankedList: toSave
 	}, function () {
