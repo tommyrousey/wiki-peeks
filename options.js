@@ -60,8 +60,8 @@ function save_options() {
 			setTimeout(function() {
 				status.textContent = '';
 				}, 750);
-			});
-	});
+		}
+	);
 }
 
 // // restores options using the preferences from chrome.storage
