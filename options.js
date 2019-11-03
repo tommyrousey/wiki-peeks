@@ -68,7 +68,27 @@ $(document).ready(async () => {
 	var sortList = $("#sortable");
 
 	// Create a sortable list for the user to rearrange
-	sortList.sortable();
+	sortList.sortable({
+        forcePlaceholderSize: true,
+        tolerance: 'pointer',
+        cursor: 'pointer',
+        over: function () {
+            removeIntent = false;
+        },
+        out: function () {
+            removeIntent = true;
+        },
+        beforeStop: function (event, ui) {
+            if(removeIntent === true) {
+                ui.item.hide();
+                if (confirm('Are you sure want to remove this Wiki?')) {
+                    ui.item.remove();
+                } else {
+                    ui.item.show();
+                }
+            }
+        }
+    });
 	sortList.disableSelection();
 
 	// Display the wikis from the user's saved profile
