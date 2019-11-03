@@ -53,8 +53,21 @@ function restore_options() {
 	});
 }
 
-document.addEventListener('DOMContentLoaded', restore_options);
+function append_wiki(name) {
+	var listElement = '<li>' + name + '</li>';
+	$("#sortable").append(listElement);
+}
 
+function add_wiki() {
+	var wiki = $('#wiki_type option:selected').text();
+	var subName = $('#sub-wiki').val();
+
+	userRankings.push(new Wiki(wiki, subName));
+
+	append_wiki(wiki + '-' + subName);
+}
+
+document.addEventListener('DOMContentLoaded', restore_options);
 
 $(document).ready(function () {
 	// restore_options();
@@ -67,11 +80,10 @@ $(document).ready(function () {
 
 	// Display the wikis from the user's saved profile
 	userRankings.forEach(function (page) {
-		var listElement = '<li>' + page.name + '</li>';
-		sortList.append(listElement);
+		append_wiki(page.name);
 	});
 
-	var addWiki = $('#add_wiki')
+	var addWiki = $('#wiki_type')
 	ids.forEach(function (wiki) {
 		console.log(wiki);
 		var listElement = '<option>' + wiki + '</option>';
@@ -79,4 +91,5 @@ $(document).ready(function () {
 	});
 
 	document.getElementById('save').addEventListener('click', save_options);
+	document.getElementById('add').addEventListener('click', add_wiki);
 });
